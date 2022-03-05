@@ -54,14 +54,30 @@ h1 a {
 }
 
 nav {
-    flex: 1 0 100%; /* forces nav to move down*/
+    position: absolute; /* no longer in layout, therefore not a flex item */
+    /* forces nav to move down*/
+    background-color: #f8fafc;
+    width: 98vw;
+    top: 3.75rem;
+    left: 0;
+    visibility: hidden;
+    opacity: 0;
+    overflow: hidden;
 }
+
+/* special class to show nav (Do not add to html)*/
+.show-nav {
+    visibility: visible;
+    opacity: 1;
+    overflow: visible;
+}
+
 
 .menu li {
-    line-height: 3.125rem;
+    line-height: 3.125rem; /* gives space between li's*/
 }
 
-.menu a {
+.menu a { /* direct parent of submenu*/
     display: flex;
     justify-content: space-between; /* turns 3 main menu's into a flex container*/
     padding: 0 0.5rem;
@@ -82,6 +98,10 @@ nav {
     max-height: 0; /* removes space where submenus where*/
 }
 
+.submenu li {
+    border-bottom: .0625rem solid #ced5e1;
+}
+
 /* what do you hover over? --> First Selector
 What do you want to change? --> Second Selector */
 
@@ -92,10 +112,92 @@ What do you want to change? --> Second Selector */
     max-height: 14.0625rem; /* hover state has limitations, a better way to develop a dropdown is with js*/
 }
 
+ul.sub-menu > li a:hover,
+ul.menu > li a:hover     {
+    color: rgb(166, 71, 255);
+}
+
+ul.menu a:hover path {
+    color: rgb(166, 71, 255);
+}
+
 @media screen and (min-width: 68.75rem) {
     .inner-container {
         padding: 0;
         width: 1000px;
         margin: 0 auto;
+        box-shadow: 1;
     }
+
+    .toggle-btn {
+        display: none;
+    }
+
+    nav {
+        visibility: visible;
+        opacity: 1;
+        overflow: visible;
+        position: unset;
+        width: unset;
+    }
+
+    .inner-container > a {
+        order: 1;
+    }
+
+    ul.menu {
+        display: flex;
+    }
+
+    ul.menu li {
+        flex-grow: 1;
+        flex-shrink: 0;
+        flex-basis: auto;
+        text-align: center;
+        position: relative;
+        white-space: nowrap;
+        justify-content: space-between;
+        padding: 0 1rem;
+    }
+
+    ul.sub-menu {
+        padding: 0;
+        position: absolute;
+        background-color: #f8fafc;
+        border-radius: 0 0 0.25rem 0.25rem ;
+        top: 3.5rem;
+        right: 20;
+        visibility: hidden;
+        overflow: hidden;
+        opacity: 0;
+        z-index: 1; 
+        transition: all 0.5s ease-in-out;
+        width: 82%;
+    }
+
+    .sub-menu li {
+        border-top: .0625rem solid #ced5e1;
+        text-align: center;
+        padding: 0;
+    }
+
+    ul.menu li:hover > ul {
+        visibility: visible;
+        opacity: 1;
+        overflow: visible;
+    }
+
+    ul.menu li:focus-within > ul, 
+    ul.menu li > ul:focus {
+        visibility: visible; /* allows you to tab to all elements / accessibility */
+        display: block;
+        opacity: 1;
+    }
+
+    .inner-container h2 {
+        text-align: center;
+        padding: 2rem;
+        color: white;
+    }
+
 }
